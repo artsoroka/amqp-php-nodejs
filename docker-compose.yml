@@ -1,0 +1,27 @@
+app: 
+  image: busybox
+  volumes: 
+    - ./src/php/.:/var/www/phpapp
+
+nginx: 
+  build: docker/images/nginx 
+  ports: 
+    - "8080:80" 
+  links: 
+    - php
+  volumes_from: 
+    - app 
+
+php: 
+  build: docker/images/php/5.6-fpm
+  volumes_from: 
+    - app 
+
+rabbit: 
+  image: rabbitmq:3.6.1-management
+  ports: 
+    - "15671:15671"
+    - "15672:15672"
+  environment: 
+    - RABBITMQ_DEFAULT_USER=rabbitadmin
+    - RABBITMQ_DEFAULT_PASS=rabbitpass
