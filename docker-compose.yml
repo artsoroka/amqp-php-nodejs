@@ -19,6 +19,11 @@ php:
   links: 
     - rabbit 
 
+node: 
+  build: src/nodejs 
+  links: 
+    - rabbit 
+
 rabbit: 
   image: rabbitmq:3.6.1-management
   ports: 
