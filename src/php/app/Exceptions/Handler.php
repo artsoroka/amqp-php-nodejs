@@ -33,7 +33,15 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        parent::report($e);
+        $whoops = new \Whoops\Run;
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
+
+        return new \Illuminate\Http\Response(
+                    $whoops->handleException($e),
+                    $e->getStatusCode(),
+                    $e->getHeaders()
+                );
+        
     }
 
     /**
